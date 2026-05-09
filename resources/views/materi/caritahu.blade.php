@@ -6,6 +6,7 @@
     <audio id="audio-ct-5" src="{{ asset('audios/caritahu_5.ogg') }}"></audio>
 
     <script>
+        // Fungsi untuk menghentikan paksa suara materi yang sedang berjalan
         function stopAudioCariTahu() {
             for(let i=1; i<=5; i++) {
                 let a = document.getElementById('audio-ct-'+i);
@@ -14,7 +15,7 @@
         }
     </script>
 
-    <a href="/peta" onclick="stopAudioCariTahu()" class="absolute top-6 left-6 z-50 bg-white/20 backdrop-blur-md p-3 rounded-full hover:bg-white/40 transition border-2 border-white/50 shadow-lg group">
+    <a href="/peta" onclick="stopAudioCariTahu(); if(window.playBgm) window.playBgm();" class="absolute top-6 left-6 z-50 bg-white/20 backdrop-blur-md p-3 rounded-full hover:bg-white/40 transition border-2 border-white/50 shadow-lg group">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
@@ -23,17 +24,33 @@
     <main class="flex-1 overflow-y-auto relative z-10 p-6 pt-24 pb-10" x-data="{ 
         slide: 1,
         init() {
-            // Coba putar slide 1 otomatis saat halaman dimuat
-            setTimeout(() => { this.putarAudio(1); }, 300);
+            // 1. Set BGM ke BGM 2 (bgm2.mp3)
+            if(window.setBgm) window.setBgm(2);
+
+            for(let i=1; i<=5; i++) {
+                let a = document.getElementById('audio-ct-' + i);
+                if(a) a.volume = 0.4; 
+            }
+            
+            // 2. Putar penjelasan slide 1 otomatis setelah jeda setengah detik
+            setTimeout(() => { this.putarAudio(1); }, 500);
         },
         putarAudio(n) {
-            stopAudioCariTahu(); // Matikan audio sebelumnya
+            stopAudioCariTahu(); // Matikan audio materi sebelumnya
+            
+            if(window.pauseBgm) window.pauseBgm(); // Matikan sementara BGM 2
+            
             let audio = document.getElementById('audio-ct-' + n);
             if(audio) {
                 let playPromise = audio.play();
                 if (playPromise !== undefined) {
                     playPromise.catch(e => console.log('Autoplay dicegah browser, butuh interaksi tap.'));
                 }
+                
+                // Jika audio materi sudah selesai, nyalakan kembali BGM 2
+                audio.onended = () => {
+                    if(window.playBgm) window.playBgm();
+                };
             }
         }
     }">

@@ -4,32 +4,55 @@
     <audio id="audio-bd-2" src="{{ asset('audios/budaya_3.ogg') }}"></audio>
 
     <script>
+        // Menghentikan semua audio narasi yang sedang menyala
         function stopAudioBudaya() {
             for(let i=0; i<=2; i++) {
                 let a = document.getElementById('audio-bd-'+i);
-                if(a) { a.pause(); a.currentTime = 0; }
+                if(a) { 
+                    a.pause(); 
+                    a.currentTime = 0; 
+                }
             }
         }
     </script>
 
-    <a href="/peta" onclick="stopAudioBudaya()" class="absolute top-6 left-6 z-50 bg-white/20 backdrop-blur-md p-3 rounded-full hover:bg-white/40 transition border-2 border-white/50 shadow-lg group">
+    <a href="/peta" onclick="stopAudioBudaya(); if(window.playBgm) window.playBgm();" class="absolute top-6 left-6 z-50 bg-white/20 backdrop-blur-md p-3 rounded-full hover:bg-white/40 transition border-2 border-white/50 shadow-lg group">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
     </a>
 
     <main class="flex-1 overflow-y-auto relative z-10 p-6 pt-20" x-data="{ 
         tahap: 0,
         init() {
-            // Coba putar intro Misi Investigasi otomatis
-            setTimeout(() => { this.putarAudio(0); }, 300);
+            // 1. Set BGM ke BGM 2 (bgm2.mp3)
+            if(typeof window.setBgm === 'function') {
+                window.setBgm(2);
+            }
+            
+            for(let i=0; i<=2; i++) {
+                let a = document.getElementById('audio-bd-' + i);
+                if(a) a.volume = 0.4; 
+            }
+
+            // 2. Putar intro Misi Investigasi otomatis dengan jeda sedikit
+            setTimeout(() => { this.putarAudio(0); }, 500);
         },
         putarAudio(n) {
-            stopAudioBudaya(); // Matikan audio sebelumnya
+            stopAudioBudaya(); // Matikan audio sebelumnya agar tidak bertumpuk
+            
+            // Matikan sementara BGM agar suara narasi terdengar jelas
+            if(window.pauseBgm) window.pauseBgm(); 
+
             let audio = document.getElementById('audio-bd-' + n);
             if(audio) {
                 let playPromise = audio.play();
                 if (playPromise !== undefined) {
-                    playPromise.catch(e => console.log('Autoplay dicegah browser.'));
+                    playPromise.catch(e => console.log('Autoplay dicegah browser, butuh interaksi tap.'));
                 }
+                
+                // Jika narasi selesai, nyalakan kembali BGM-nya
+                audio.onended = () => {
+                    if(window.playBgm) window.playBgm();
+                };
             }
         }
     }">

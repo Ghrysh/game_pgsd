@@ -41,45 +41,60 @@
         {{ $slot }}
     </div>
 
-    <audio id="global-bgm" loop src="{{ asset('audios/bgm.ogg') }}"></audio>
+    <audio id="global-bgm1" loop src="{{ asset('audios/bgm.mp3') }}"></audio>
+    <audio id="global-bgm2" loop src="{{ asset('audios/bgm2.mp3') }}"></audio>
+    <audio id="sfx-tap" src="{{ asset('audios/tap.mp3') }}"></audio>
 
     <script>
-        // Setup BGM
-        window.bgm = document.getElementById('global-bgm');
-        if(window.bgm) window.bgm.volume = 0.2; // Volume dikecilkan (20%) agar tidak menutupi suara materi
+        window.activeBgm = null;
+        window.bgmStatus = 'stop'; 
+
+        // Fungsi Pilih BGM (1 atau 2)
+        window.setBgm = function(num) {
+            const bgm1 = document.getElementById('global-bgm1');
+            const bgm2 = document.getElementById('global-bgm2');
+            
+            // Matikan semua dulu
+            bgm1.pause();
+            bgm2.pause();
+
+            window.activeBgm = (num === 1) ? bgm1 : bgm2;
+            window.activeBgm.volume = 0.2; // Volume background santai
+            window.bgmStatus = 'play';
+            window.playBgm();
+        };
 
         window.playBgm = function() {
-            if(window.bgm && window.bgm.paused) {
-                window.bgm.play().catch(e => console.log('Menunggu interaksi user untuk BGM'));
+            if(window.activeBgm && window.bgmStatus === 'play') {
+                window.activeBgm.play().catch(e => {
+                    console.log("Autoplay diblokir browser. Menunggu klik pertama...");
+                });
             }
         };
 
         window.pauseBgm = function() {
-            if(window.bgm) window.bgm.pause();
+            if(window.activeBgm) window.activeBgm.pause();
         };
 
-        // BGM otomatis menyala saat user pertama kali menyentuh layar manapun
-        document.body.addEventListener('click', () => {
-            playBgm();
-        }, { once: true });
-
-        // Fungsi Suara Materi (Text-to-Speech manual dengan OGG/MP3)
-        window.bacakan = function(teks) {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                const suara = new SpeechSynthesisUtterance(teks);
-                suara.lang = 'id-ID';
-                suara.rate = 0.85; 
-                
-                // Matikan BGM saat suara materi jalan
-                pauseBgm();
-                suara.onend = function() { playBgm(); }; // Nyalakan lagi BGM setelah materi selesai dibaca
-                
-                window.speechSynthesis.speak(suara);
+        // GLOBAL CLICK HANDLER (Untuk Sound Effect & Unlock Autoplay)
+        document.addEventListener('click', function(e) {
+            // 1. Unlock Audio Browser (Jika bgm harusnya nyala tapi terblokir)
+            if (window.bgmStatus === 'play' && window.activeBgm && window.activeBgm.paused) {
+                window.activeBgm.play().catch(err => {});
             }
-        };
 
-        // Fungsi Simpan Level
+            // 2. Tiap Klik Button ada suara Tap
+            const isButton = e.target.closest('button') || e.target.closest('a');
+            if (isButton) {
+                const tap = document.getElementById('sfx-tap');
+                if(tap) {
+                    tap.currentTime = 0;
+                    tap.play().catch(err => {});
+                }
+            }
+        });
+
+        // Global Selesai Level
         window.selesaiMateri = function(levelLulus) {
             let levelTerbuka = parseInt(localStorage.getItem('kincir_level')) || 1;
             if(levelTerbuka === levelLulus && levelTerbuka < 4) {

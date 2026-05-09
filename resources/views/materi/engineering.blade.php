@@ -34,7 +34,7 @@
                 <div class="grid grid-cols-3 gap-3">
                     <template x-for="item in bahanTersedia" :key="item.id">
                         <div @click="pilihBahan(item)" class="bg-[#fcd386] border-2 border-white rounded-xl aspect-square flex flex-col items-center justify-center cursor-pointer shadow-lg hover:scale-105 active:scale-95">
-                            <span class="text-4xl drop-shadow-md z-10" x-text="item.icon"></span>
+                            <div class="w-12 h-12 flex items-center justify-center drop-shadow-md z-10" x-html="item.icon"></div>
                             <span class="text-[10px] font-black text-orange-950 mt-1 z-10 text-center leading-tight" x-text="item.nama"></span>
                         </div>
                     </template>
@@ -48,7 +48,7 @@
                         <div class="w-16 h-16 rounded-xl border-2 border-dashed border-white/70 bg-blue-800/50 flex items-center justify-center relative">
                             <template x-if="bahanTerpilih[i-1]">
                                 <div @click="hapusBahan(bahanTerpilih[i-1])" class="absolute inset-0 bg-[#fcd386] border-2 border-white rounded-xl flex items-center justify-center cursor-pointer shadow-md animate-bounce-short z-10">
-                                    <span class="text-3xl drop-shadow-md" x-text="bahanTerpilih[i-1].icon"></span>
+                                    <div class="w-10 h-10 flex items-center justify-center drop-shadow-sm" x-html="bahanTerpilih[i-1].icon"></div>
                                 </div>
                             </template>
                         </div>
@@ -84,23 +84,35 @@
                 statusHasil: '',
                 bahanTersedia: [],
                 bahanTerpilih: [],
-                playing: false, // Pindahkan state playing ke sini
+                playing: false,
                 
-                // DEKLARASI AUDIO SOUND EFFECT (SFX)
-                sfxTap: new Audio('{{ asset("audios/tap.ogg") }}'),
-                sfxDrop: new Audio('{{ asset("audios/pop.ogg") }}'),
-                sfxWin: new Audio('{{ asset("audios/win.ogg") }}'),
-                sfxLose: new Audio('{{ asset("audios/lose.ogg") }}'),
+                // DEKLARASI SFX
+                sfxTap: new Audio('{{ asset("audios/tap.mp3") }}'),
+                sfxDrop: new Audio('{{ asset("audios/pop.mp3") }}'),
+                sfxWin: new Audio('{{ asset("audios/win.mp3") }}'),
+                sfxLose: new Audio('{{ asset("audios/wrong.mp3") }}'),
 
                 putarSfx(audio) {
-                    audio.currentTime = 0; 
-                    audio.play().catch(e => {});
+                    if (audio) {
+                        audio.currentTime = 0; 
+                        audio.play().catch(e => {});
+                    }
                 },
 
-                init() { this.setupBahan(); },
+                init() { 
+                    if(typeof window.setBgm === 'function') window.setBgm(2);
+                    this.setupBahan(); 
+                },
+
                 setupBahan() {
+                    // Ikon Stik menggunakan SVG Cream seperti Tusuk Sate
+                    const stikSvg = `<svg viewBox="0 0 24 24" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="10.5" y="2" width="3" height="20" rx="1" fill="#FFF8DC" stroke="#D2B48C" stroke-width="0.8"/>
+                        <path d="M12 4V20" stroke="#EEDC82" stroke-width="0.5" stroke-linecap="round" opacity="0.6"/>
+                    </svg>`;
+
                     this.bahanTersedia = [
-                        { id: 1, nama: 'Kayu/Stik', icon: '🪵', isBenar: true },
+                        { id: 1, nama: 'Stik', icon: stikSvg, isBenar: true },
                         { id: 2, nama: 'Tutup Botol', icon: '🔴', isBenar: true },
                         { id: 3, nama: 'Lem Tembak', icon: '🔫', isBenar: true },
                         { id: 4, nama: 'Air/Sungai', icon: '💧', isBenar: true },
@@ -110,17 +122,15 @@
                     this.bahanTerpilih = [];
                     this.statusHasil = '';
                 },
+
                 mulaiGame() {
-                    // Stop video dengan aman dari dalam JS
-                    if (this.$refs.videoTutorial) {
-                        this.$refs.videoTutorial.pause();
-                    }
-                    
+                    if (this.$refs.videoTutorial) this.$refs.videoTutorial.pause();
                     this.putarSfx(this.sfxTap);
-                    if(window.playBgm) window.playBgm(); // Pastikan BGM menyala
+                    if(window.playBgm) window.playBgm();
                     this.setupBahan();
                     this.tahapGame = 'main';
                 },
+
                 pilihBahan(item) {
                     if (this.bahanTerpilih.length < 4) {
                         this.putarSfx(this.sfxTap); 
@@ -129,15 +139,16 @@
                         if (this.bahanTerpilih.length === 4) setTimeout(() => this.cekJawaban(), 400);
                     }
                 },
+
                 hapusBahan(item) {
                     this.putarSfx(this.sfxDrop); 
                     this.bahanTerpilih = this.bahanTerpilih.filter(i => i.id !== item.id);
                     this.bahanTersedia.push(item);
                 },
+
                 cekJawaban() {
-                    if(window.pauseBgm) window.pauseBgm(); 
+                    if(window.pauseBgm) window.pauseBgm();
                     let gagal = this.bahanTerpilih.some(item => !item.isBenar);
-                    
                     if (gagal) {
                         this.statusHasil = 'kalah';
                         this.putarSfx(this.sfxLose);
@@ -147,17 +158,17 @@
                     }
                     this.tahapGame = 'hasil';
                 },
+
                 resetGame() { 
                     this.putarSfx(this.sfxTap);
-                    if(window.playBgm) window.playBgm(); 
-                    this.setupBahan(); 
-                    this.tahapGame = 'main'; 
+                    if(window.playBgm) window.playBgm();
+                    this.setupBahan();
+                    this.tahapGame = 'main';
                 },
+
                 btnSelesai() {
                     this.putarSfx(this.sfxTap);
-                    if(typeof window.selesaiMateri === "function") {
-                        window.selesaiMateri(4); 
-                    }
+                    if(typeof window.selesaiMateri === "function") window.selesaiMateri(4);
                 }
             }));
         });
