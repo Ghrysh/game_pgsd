@@ -1,6 +1,6 @@
 <x-layout>
     <div x-data="coverPage()" class="absolute inset-0 bg-black z-50 flex flex-col justify-between p-12 text-center">
-        <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover opacity-60">
+        <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover opacity-80 pointer-events-none">
             <source src="{{ asset('videos/bg.mp4') }}" type="video/mp4">
         </video>
 
