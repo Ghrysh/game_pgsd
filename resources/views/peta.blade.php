@@ -22,7 +22,7 @@
     </a>
 
     <main x-data="petaDesa()" class="absolute inset-0 flex-1 overflow-y-auto z-30 bg-green-800">
-        <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover opacity-80 scale-[1.2]">
+        <video autoplay muted loop playsinline class="absolute top-1/2 left-1/2 min-w-[130%] min-h-[130%] -translate-x-1/2 -translate-y-1/2 object-cover opacity-80">
             <source src="{{ asset('videos/bg2.mp4') }}" type="video/mp4">
         </video>
 
