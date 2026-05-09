@@ -34,7 +34,7 @@
         }
     </style>
 </head>
-<body class="bg-gray-900 font-sans text-gray-800 antialiased flex justify-center h-screen overflow-hidden">
+<body class="bg-gray-900 font-sans text-gray-800 antialiased flex justify-center h-[100dvh] overflow-hidden">
     
     <div class="w-full max-w-[420px] bg-gradient-to-b from-blue-600 to-blue-900 h-full relative shadow-2xl overflow-hidden flex flex-col">
         <div class="absolute inset-0 blueprint-grid pointer-events-none opacity-60 z-0"></div>

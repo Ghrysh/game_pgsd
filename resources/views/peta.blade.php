@@ -32,7 +32,7 @@
             </h2>
         </div>
 
-        <div class="relative w-full h-[750px] z-10 mt-4 max-w-[360px] mx-auto pb-10">
+        <div class="relative w-full h-[750px] z-10 mt-4 max-w-[360px] mx-auto pb-10 mb-24">
             
             <svg class="absolute inset-0 w-full h-full z-0 pointer-events-none" preserveAspectRatio="none" viewBox="0 0 100 100">
                 <path d="M 25,8 C 65,8 75,18 75,28 C 75,38 25,38 25,48 C 25,58 75,58 75,68 C 75,78 25,78 25,88" fill="none" stroke="#a07c50" stroke-width="5" stroke-linecap="round"/>

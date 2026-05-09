@@ -1,5 +1,5 @@
 <x-layout>
-    <a href="/peta" onclick="if(window.speechSynthesis) window.speechSynthesis.cancel();" class="absolute top-6 left-6 z-50 bg-white/20 backdrop-blur-md p-3 rounded-full hover:bg-white/40 transition border-2 border-white/50 shadow-lg group">
+    <a href="/kincir-air-interaktif/peta" onclick="if(window.speechSynthesis) window.speechSynthesis.cancel();" class="absolute top-6 left-6 z-50 bg-white/20 backdrop-blur-md p-3 rounded-full hover:bg-white/40 transition border-2 border-white/50 shadow-lg group">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
     </a>
 
@@ -10,6 +10,7 @@
             
             <div class="aspect-[3/4] bg-gray-200 rounded-xl overflow-hidden relative border-4 border-gray-300">
                 <video x-ref="videoTutorial" class="absolute inset-0 w-full h-full object-cover" 
+                    x-init="$el.volume = 0.4"
                     @play="playing = true; if(window.pauseBgm) pauseBgm();" 
                     @pause="playing = false; if(window.playBgm) playBgm();" 
                     @ended="playing = false; if(window.playBgm) playBgm();">
