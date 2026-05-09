@@ -15,7 +15,7 @@
 
     <audio id="sfx-peta" src="{{ asset('audios/peta.ogg') }}"></audio>
 
-    <a href="/" class="absolute top-6 left-6 z-50 bg-white/20 backdrop-blur-md p-3 rounded-full hover:bg-white/40 transition border-2 border-white/50 shadow-lg group">
+    <a href="/kincir-air-interaktif/" class="absolute top-6 left-6 z-50 bg-white/20 backdrop-blur-md p-3 rounded-full hover:bg-white/40 transition border-2 border-white/50 shadow-lg group">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
@@ -127,7 +127,7 @@
                 bukaMateri(url, reqLvl) {
                     if (this.level >= reqLvl) {
                         setTimeout(() => {
-                            window.location.href = "{{ url('') }}" + url;
+                            window.location.href = "/kincir-air-interaktif" + url;
                         }, 200);
                     }
                 }
