@@ -1,6 +1,8 @@
-// vite.config.js
+import { defineConfig } from 'vite';
+import laravel from 'laravel-vite-plugin';
+
 export default defineConfig({
-    // Tambahkan baris base ini!
+    // Tambahkan base agar aset terbaca di subdirectory
     base: '/kincir-air-interaktif/build/', 
     plugins: [
         laravel({
