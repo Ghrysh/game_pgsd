@@ -127,7 +127,7 @@
                 bukaMateri(url, reqLvl) {
                     if (this.level >= reqLvl) {
                         setTimeout(() => {
-                            window.location.href = url;
+                            window.location.href = "{{ url('') }}" + url;
                         }, 200);
                     }
                 }

@@ -100,7 +100,7 @@
             if(levelTerbuka === levelLulus && levelTerbuka < 5) {
                 localStorage.setItem('kincir_level', levelLulus + 1);
             }
-            window.location.href = '/peta';
+            window.location.href = "{{ url('peta') }}";
         };
     </script>
 </body>

@@ -31,7 +31,7 @@
                     // Delay dikit supaya suara 'tap' dari layout sempat terdengar
                     setTimeout(() => {
                         // Tambahkan ?start=true agar peta.ogg berputar di halaman peta
-                        window.location.href = '/peta?start=true';
+                        window.location.href = "{{ url('peta?start=true') }}";
                     }, 300);
                 }
             }));

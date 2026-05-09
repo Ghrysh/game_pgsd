@@ -119,7 +119,7 @@
                     if(typeof window.selesaiMateri === "function") {
                         window.selesaiMateri(4); 
                     } else {
-                        window.location.href = '/peta';
+                        window.location.href = "{{ url('peta') }}";
                     }
                 }
             }));
