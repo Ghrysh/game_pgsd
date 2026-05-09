@@ -1,4 +1,6 @@
 <x-layout>
+    <audio id="sfx-cover" src="{{ asset('audios/cover.ogg') }}"></audio>
+
     <div x-data="coverPage()" class="absolute inset-0 bg-black z-50 flex flex-col justify-between p-12 text-center">
         <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover opacity-80 pointer-events-none">
             <source src="{{ asset('videos/bg.mp4') }}" type="video/mp4">
@@ -24,8 +26,24 @@
         document.addEventListener('alpine:init', () => {
             Alpine.data('coverPage', () => ({
                 init() {
-                    // Set BGM 1 (bgm.mp3)
+                    // 1. Jalankan BGM 1 (Volume mengikuti setting bawaan layout)
                     if(window.setBgm) window.setBgm(1);
+
+                    // 2. Mainkan suara cover.ogg dengan volume 0.4
+                    const coverAudio = document.getElementById('sfx-cover');
+                    if(coverAudio) {
+                        coverAudio.volume = 0.4;
+                        coverAudio.play().catch(e => {
+                            console.log("Autoplay cover.ogg diblokir browser. Menunggu klik pertama...");
+                            
+                            // Jika diblokir (terutama iPhone/Chrome), tunggu user klik/tap layar sekali
+                            const unlockCoverAudio = () => {
+                                coverAudio.play().catch(err => {});
+                                document.removeEventListener('click', unlockCoverAudio);
+                            };
+                            document.addEventListener('click', unlockCoverAudio);
+                        });
+                    }
                 },
                 goToPeta() {
                     // Delay dikit supaya suara 'tap' dari layout sempat terdengar

@@ -96,15 +96,54 @@
                 </ul>
             </div>
 
-            <div x-show="slide === 5" style="display: none;" class="flex-1">
-                <h3 class="font-black text-xl text-blue-700 mb-3 text-center">5. Permasalahan Budaya</h3>
-                <ul class="text-gray-700 text-[13px] space-y-2 list-disc pl-4 mb-3">
-                    <li><b>Lunturnya Budaya Lokal:</b> Lebih suka budaya asing.</li>
-                    <li><b>Kurang Toleransi:</b> Perbedaan memicu pertengkaran.</li>
-                    <li><b>Klaim Budaya:</b> Budaya kita diakui negara lain.</li>
-                </ul>
-                <div class="bg-yellow-100 p-3 rounded-xl border border-yellow-300 text-[13px] font-bold text-yellow-900">
-                    Solusi: Bangga pakai produk Indonesia, belajar kesenian daerah, dan hargai teman!
+            <div x-show="slide === 5" style="display: none;" class="flex-1 overflow-y-auto pr-1">
+                <h3 class="font-black text-lg text-blue-700 mb-2 text-center leading-tight">
+                    5. Permasalahan Budaya
+                </h3>
+
+                <div class="bg-white/50 p-3 rounded-xl border border-blue-100 mb-3">
+                    <p class="text-gray-700 text-[12px] leading-relaxed mb-2">
+                        Nenek moyang kita sejak dulu hebat dalam bertani menggunakan <b>Kincir Air Tradisional</b> dari bambu. Tapi sekarang, budaya ini mulai hilang karena petani lebih memilih mesin pompa bensin.
+                    </p>
+                    <div class="bg-red-50 p-2 rounded-lg border-l-4 border-red-400">
+                        <p class="text-red-900 text-[11px]">
+                            <b>Masalah:</b> Generasi muda terancam tidak tahu lagi warisan teknologi ramah lingkungan ini.
+                        </p>
+                    </div>
+                </div>
+
+                <h4 class="font-bold text-[13px] text-blue-800 mb-2 uppercase tracking-wider">Mempelajari Kincir via STEM:</h4>
+                <div class="grid grid-cols-1 gap-2 mb-3">
+                    <div class="flex gap-2 items-start bg-blue-50 p-2 rounded-lg border border-blue-200">
+                        <span class="font-black text-blue-600 text-lg">S</span>
+                        <div class="text-[11px] text-gray-700">
+                            <b>Science:</b> Perubahan energi gerak air menjadi energi mekanik untuk memutar baling-baling.
+                        </div>
+                    </div>
+                    <div class="flex gap-2 items-start bg-green-50 p-2 rounded-lg border border-green-200">
+                        <span class="font-black text-green-600 text-lg">T</span>
+                        <div class="text-[11px] text-gray-700">
+                            <b>Technology:</b> Kincir adalah teknologi tradisional yang hebat karena tanpa listrik & nol polusi.
+                        </div>
+                    </div>
+                    <div class="flex gap-2 items-start bg-orange-50 p-2 rounded-lg border border-orange-200">
+                        <span class="font-black text-orange-600 text-lg">E</span>
+                        <div class="text-[11px] text-gray-700">
+                            <b>Engineering:</b> Merancang miniatur kincir dari bambu/stik agar kuat dan berputar lancar.
+                        </div>
+                    </div>
+                    <div class="flex gap-2 items-start bg-purple-50 p-2 rounded-lg border border-purple-200">
+                        <span class="font-black text-purple-600 text-lg">M</span>
+                        <div class="text-[11px] text-gray-700">
+                            <b>Mathematics:</b> Menghitung diameter kincir, jarak antar baling-baling, dan debit air.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-indigo-600 p-3 rounded-xl shadow-lg">
+                    <p class="text-white text-[12px] font-bold text-center leading-snug">
+                        Ayo lestarikan budaya teknologi Indonesia dengan menjadi ilmuwan cilik yang pintar STEM! 🇮🇩✨
+                    </p>
                 </div>
             </div>
 
