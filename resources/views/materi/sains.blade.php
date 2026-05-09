@@ -1,14 +1,11 @@
 <x-layout>
     <audio id="sains-snd-1" src="{{ asset('audios/sains_1.ogg') }}"></audio>
-    <audio id="sains-snd-2" src="{{ asset('audios/sains_2.ogg') }}"></audio>
 
     <script>
         // Fungsi untuk menghentikan paksa suara materi sains jika user keluar halaman
         function forceStopSains() {
             let s1 = document.getElementById('sains-snd-1');
-            let s2 = document.getElementById('sains-snd-2');
             if (s1) { s1.pause(); s1.currentTime = 0; }
-            if (s2) { s2.pause(); s2.currentTime = 0; }
         }
     </script>
 
@@ -21,18 +18,16 @@
     <main class="absolute inset-0 z-0 bg-black flex flex-col justify-center items-center overflow-hidden"
           x-data="{
               played: false,
-              showSelesai: false, // State untuk memunculkan tombol
+              showSelesai: false, 
               init() {
                   // 1. Set BGM ke BGM 2
                   if(typeof window.setBgm === 'function') window.setBgm(2);
                   
                   // 2. Atur Volume Audio agar kecil (0.4)
                   let s1 = document.getElementById('sains-snd-1');
-                  let s2 = document.getElementById('sains-snd-2');
                   if(s1) s1.volume = 0.4;
-                  if(s2) s2.volume = 0.4;
 
-                  // 3. Mulai putar sekuens suara otomatis
+                  // 3. Mulai putar suara otomatis
                   setTimeout(() => { this.playSequence(); }, 800);
               },
               playSequence() {
@@ -42,9 +37,8 @@
                   if(typeof window.pauseBgm === 'function') window.pauseBgm();
                   
                   let s1 = document.getElementById('sains-snd-1');
-                  let s2 = document.getElementById('sains-snd-2');
                   
-                  if (s1 && s2) {
+                  if (s1) {
                       let playPromise = s1.play();
                       if (playPromise !== undefined) {
                           playPromise.catch(e => {
@@ -53,17 +47,10 @@
                           });
                       }
                       
-                      // Saat audio 1 selesai, tunggu 1 detik, lalu putar audio 2
+                      // Saat audio SELESAI, nyalakan BGM dan munculkan Tombol
                       s1.onended = () => {
-                          setTimeout(() => {
-                              s2.play().catch(e => {});
-                          }, 1000); 
-                      };
-                      
-                      // Saat audio 2 SELESAI, nyalakan BGM dan munculkan Tombol
-                      s2.onended = () => {
                           if(typeof window.playBgm === 'function') window.playBgm();
-                          this.showSelesai = true; // Munculkan tombol
+                          this.showSelesai = true; 
                       };
                   }
               }

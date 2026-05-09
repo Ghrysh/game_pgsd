@@ -6,7 +6,7 @@
 
         <div class="relative z-10 pt-10">
             <h1 class="text-4xl font-black text-white leading-tight drop-shadow-2xl tracking-tighter">
-                KINCIR PINTAR <br> UNTUK DESA
+                KINCIR AIR PINTAR <br> UNTUK DESA
             </h1>
         </div>
 
@@ -30,7 +30,8 @@
                 goToPeta() {
                     // Delay dikit supaya suara 'tap' dari layout sempat terdengar
                     setTimeout(() => {
-                        window.location.href = '/peta';
+                        // Tambahkan ?start=true agar peta.ogg berputar di halaman peta
+                        window.location.href = '/peta?start=true';
                     }, 300);
                 }
             }));

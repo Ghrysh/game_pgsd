@@ -6,7 +6,7 @@
     <main class="flex-1 overflow-y-auto relative z-10 p-6 pt-24" x-data="kumpulkanKarya()">
         
         <div x-show="tahap === 'video'" class="bg-white/95 backdrop-blur-sm rounded-3xl p-6 shadow-2xl border-4 border-white w-full">
-            <h3 class="font-black text-xl text-center mb-4 text-orange-600">Pelajari Dulu Caranya!</h3>
+            <h3 class="font-black text-xl text-center mb-4 text-orange-600">Mulai rakit kincir airmu!</h3>
             
             <div class="aspect-[3/4] bg-gray-200 rounded-xl overflow-hidden relative border-4 border-gray-300">
                 <video x-ref="videoTutorial" class="absolute inset-0 w-full h-full object-cover" 
@@ -72,7 +72,7 @@
                 fotoUrl: '',
                 nilai: 0,
                 pesanPujian: '',
-                pujianPilihan: ['LUAR BIASA!', 'HEBAT SEKALI!', 'KARYA INDAH!', 'MANTAP JIWA!', 'KARYA KEREN!'],
+                pujianPilihan: ['LUAR BIASA!', 'HEBAT SEKALI!', 'KARYA INDAH!', 'KAMU HEBAT!', 'KARYA KEREN!'],
 
                 // SFX
                 sfxTap: new Audio('{{ asset("audios/tap.mp3") }}'),

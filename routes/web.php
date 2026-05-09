@@ -8,3 +8,4 @@ Route::get('/materi/caritahu', function () { return view('materi.caritahu'); });
 Route::get('/materi/budaya', function () { return view('materi.budaya'); });
 Route::get('/materi/sains', function () { return view('materi.sains'); });
 Route::get('/materi/engineering', function () { return view('materi.engineering'); });
+Route::get('/materi/merakit', function () { return view('materi.merakit'); });

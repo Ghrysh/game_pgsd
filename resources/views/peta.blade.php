@@ -13,6 +13,14 @@
         }
     </style>
 
+    <audio id="sfx-peta" src="{{ asset('audios/peta.ogg') }}"></audio>
+
+    <a href="/" class="absolute top-6 left-6 z-50 bg-white/20 backdrop-blur-md p-3 rounded-full hover:bg-white/40 transition border-2 border-white/50 shadow-lg group">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+    </a>
+
     <main x-data="petaDesa()" class="absolute inset-0 flex-1 overflow-y-auto z-30 bg-green-800">
         <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover opacity-80 scale-[1.2]">
             <source src="{{ asset('videos/bg2.mp4') }}" type="video/mp4">
@@ -89,8 +97,31 @@
             Alpine.data('petaDesa', () => ({
                 level: parseInt(localStorage.getItem('kincir_level')) || 1,
                 init() {
+                    // 1. Jalankan BGM normal di segala kondisi (Refresh, Selesai Misi, dsb)
                     if(typeof window.setBgm === 'function') {
                         window.setBgm(1); 
+                    }
+
+                    // 2. Cek apakah user datang dari Cover (Hanya jika klik Mulai Petualangan)
+                    const urlParams = new URLSearchParams(window.location.search);
+                    if (urlParams.get('start') === 'true') {
+                        this.putarSuaraSambutan();
+                    }
+                },
+                putarSuaraSambutan() {
+                    const audio = document.getElementById('sfx-peta');
+                    if (audio) {
+                        // Volume sambutan lebih tinggi agar terdengar di atas BGM
+                        audio.volume = 0.4; 
+                        
+                        // Mainkan bersamaan (TANPA pauseBgm)
+                        audio.play().catch(e => console.log("Menunggu interaksi user"));
+
+                        audio.onended = () => {
+                            // Bersihkan URL agar saat refresh suara sambutan tidak mengulang
+                            const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+                            window.history.replaceState({path:cleanUrl}, '', cleanUrl);
+                        };
                     }
                 },
                 bukaMateri(url, reqLvl) {

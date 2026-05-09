@@ -97,7 +97,7 @@
         // Global Selesai Level
         window.selesaiMateri = function(levelLulus) {
             let levelTerbuka = parseInt(localStorage.getItem('kincir_level')) || 1;
-            if(levelTerbuka === levelLulus && levelTerbuka < 4) {
+            if(levelTerbuka === levelLulus && levelTerbuka < 5) {
                 localStorage.setItem('kincir_level', levelLulus + 1);
             }
             window.location.href = '/peta';
