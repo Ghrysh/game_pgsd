@@ -2,7 +2,7 @@
     <audio id="sfx-cover" src="{{ asset('audios/cover.ogg') }}"></audio>
 
     <div x-data="coverPage()" class="absolute inset-0 bg-black z-50 flex flex-col justify-between p-12 text-center">
-        <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover opacity-80 pointer-events-none">
+        <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover object-center opacity-80 pointer-events-none z-0">
             <source src="{{ asset('videos/bg.mp4') }}" type="video/mp4">
         </video>
 
