@@ -106,15 +106,26 @@
             window.bgmStatus = 'play';
             window.playBgm();
 
-            // 2. Cari dan paksa mainkan audio khusus halaman Cover (jika ada)
-            const coverAudio = document.getElementById('sfx-cover');
-            if(coverAudio && coverAudio.paused) coverAudio.play().catch(e => {});
+            // 2. Cari semua tag audio di halaman dan coba "sentuh" agar terbuka kuncinya
+            const allAudios = document.querySelectorAll('audio');
+            allAudios.forEach(audio => {
+                // Kita coba play & pause instan untuk unlock tanpa merusak urutan
+                if (audio.paused) {
+                    audio.play().then(() => {
+                        // Jika bukan BGM, kita pause lagi, nanti halaman materi yang atur
+                        if (!audio.id.includes('global-bgm')) {
+                            audio.pause();
+                        }
+                    }).catch(e => {});
+                }
+            });
 
-            // 3. Cari dan paksa mainkan audio khusus halaman Peta (jika ada)
-            const petaAudio = document.getElementById('sfx-peta');
-            if(petaAudio && petaAudio.paused) petaAudio.play().catch(e => {});
+            // 3. JEMBATAN: Panggil fungsi retry dari halaman materi (caritahu, budaya, dll)
+            if (typeof window.retrySuara === 'function') {
+                window.retrySuara();
+            }
             
-            // 4. Hilangkan animasi denyut (pulse) jika tombol sudah pernah diklik
+            // 4. Hilangkan animasi pulse
             const btn = document.getElementById('btn-force-audio');
             if(btn) btn.classList.remove('animate-pulse');
         };

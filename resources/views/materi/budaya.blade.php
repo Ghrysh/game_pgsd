@@ -33,7 +33,10 @@
                 if(a) a.volume = 0.4; 
             }
 
-            // 2. Putar intro Misi Investigasi otomatis dengan jeda sedikit
+            // 2. Jembatan untuk Floating Button di layout (Gunakan this.tahap dan this.putarAudio)
+            window.retrySuara = () => this.putarAudio(this.tahap);
+
+            // 3. Putar intro Misi Investigasi otomatis dengan jeda sedikit
             setTimeout(() => { this.putarAudio(0); }, 500);
         },
         putarAudio(n) {
