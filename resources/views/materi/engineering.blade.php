@@ -67,11 +67,12 @@
                         <button @click="btnSelesai()" class="w-full bg-green-500 text-white font-black py-4 rounded-full shadow-[0_5px_0_#166534]">Selesai</button>
                     </div>
                 </template>
+                
                 <template x-if="statusHasil === 'kalah'">
                     <div>
-                        <h3 class="text-3xl font-black text-red-600 mb-2">YAH GAGAL!</h3>
-                        <p class="text-gray-700 font-bold mb-8">Masa kincir sederhana pakai besi berat atau plastik? Coba lagi!</p>
-                        <button @click="resetGame()" class="w-full bg-red-500 text-white font-black py-4 rounded-full shadow-[0_5px_0_#991b1b]">Coba Lagi</button>
+                        <h3 class="text-3xl font-black text-orange-500 mb-2">HAMPIR TEPAT!</h3>
+                        <p class="text-gray-700 font-bold mb-8">Sedikit Lagi! Yuk, kita coba pilih lagi.</p>
+                        <button @click="resetGame()" class="w-full bg-orange-500 text-white font-black py-4 rounded-full shadow-[0_5px_0_#c2410c]">Coba Lagi</button>
                     </div>
                 </template>
             </div>
@@ -87,7 +88,6 @@
                 bahanTerpilih: [],
                 playing: false,
                 
-                // DEKLARASI SFX
                 sfxTap: new Audio('{{ asset("audios/tap.mp3") }}'),
                 sfxDrop: new Audio('{{ asset("audios/pop.mp3") }}'),
                 sfxWin: new Audio('{{ asset("audios/win.mp3") }}'),
@@ -106,7 +106,6 @@
                 },
 
                 setupBahan() {
-                    // Ikon Stik menggunakan SVG Cream seperti Tusuk Sate
                     const stikSvg = `<svg viewBox="0 0 24 24" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="10.5" y="2" width="3" height="20" rx="1" fill="#FFF8DC" stroke="#D2B48C" stroke-width="0.8"/>
                         <path d="M12 4V20" stroke="#EEDC82" stroke-width="0.5" stroke-linecap="round" opacity="0.6"/>

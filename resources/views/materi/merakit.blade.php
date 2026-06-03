@@ -45,8 +45,8 @@
                 <div class="relative aspect-square rounded-2xl overflow-hidden bg-gray-100 border-2 border-gray-200">
                     <img :src="fotoUrl" class="w-full h-full object-cover">
                     <div class="absolute top-4 right-4 bg-yellow-400 border-4 border-white text-orange-950 px-4 py-2 rounded-2xl shadow-xl transform rotate-12">
-                        <p class="text-[10px] font-black uppercase text-center leading-none">Skor Karya</p>
-                        <p class="text-3xl font-black text-center" x-text="nilai"></p>
+                        <p class="text-[10px] font-black uppercase text-center leading-none">Hasil Karya</p>
+                        <p class="text-xl font-black text-center mt-1" x-text="predikat"></p>
                     </div>
                 </div>
             </div>
@@ -71,14 +71,18 @@
                 tahap: 'video',
                 playing: false,
                 fotoUrl: '',
-                nilai: 0,
+                
+                // Variabel yang baru diubah menjadi teks
+                predikat: '', 
+                daftarPredikat: ['KEREN!', 'BAGUS!', 'MANTAP!', 'JUARA!', 'TOP!'],
+                
                 pesanPujian: '',
                 pujianPilihan: ['LUAR BIASA!', 'HEBAT SEKALI!', 'KARYA INDAH!', 'KAMU HEBAT!', 'KARYA KEREN!'],
 
                 // SFX
                 sfxTap: new Audio('{{ asset("audios/tap.mp3") }}'),
                 sfxWin: new Audio('{{ asset("audios/win.mp3") }}'),
-                sfxShutter: new Audio('https://assets.mixkit.co/active_storage/sfx/710/710-preview.mp3'), // Suara Kamera
+                sfxShutter: new Audio('https://assets.mixkit.co/active_storage/sfx/710/710-preview.mp3'),
 
                 init() {
                     if(typeof window.setBgm === 'function') window.setBgm(2);
@@ -96,16 +100,13 @@
                         this.tahap = 'loading';
                         this.sfxShutter.play().catch(e => {});
                         
-                        // Buat URL Foto
                         this.fotoUrl = URL.createObjectURL(file);
                         
-                        // Logika Nilai Random (90-99) agar selalu bagus tapi beda-beda
-                        this.nilai = Math.floor(Math.random() * (99 - 90 + 1)) + 90;
+                        // Memilih predikat acak menggantikan angka 90-99
+                        this.predikat = this.daftarPredikat[Math.floor(Math.random() * this.daftarPredikat.length)];
                         
-                        // Pilih Pujian Random
                         this.pesanPujian = this.pujianPilihan[Math.floor(Math.random() * this.pujianPilihan.length)];
 
-                        // Simulasi loading penilaian selama 1.5 detik
                         setTimeout(() => {
                             if(window.pauseBgm) window.pauseBgm();
                             this.sfxWin.play().catch(e => {});
@@ -116,7 +117,6 @@
 
                 selesaiPetualangan() {
                     this.sfxTap.play().catch(e => {});
-                    // Tandai level 4 selesai agar peta terupdate (jika perlu)
                     if(typeof window.selesaiMateri === "function") {
                         window.selesaiMateri(4); 
                     } else {
