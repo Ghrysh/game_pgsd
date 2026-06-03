@@ -73,7 +73,7 @@
                 
                 // Variabel yang baru diubah menjadi teks
                 predikat: '', 
-                daftarPredikat: ['KEREN!', 'BAGUS!', 'MANTAP!', 'JUARA!', 'TOP!'],
+                daftarPredikat: ['KEREN!', 'BAGUS!', 'HEBAT!'],
                 
                 pesanPujian: '',
                 pujianPilihan: ['LUAR BIASA!', 'HEBAT SEKALI!', 'KARYA INDAH!', 'KAMU HEBAT!', 'KARYA KEREN!'],
