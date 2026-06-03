@@ -45,7 +45,6 @@
                 <div class="relative aspect-square rounded-2xl overflow-hidden bg-gray-100 border-2 border-gray-200">
                     <img :src="fotoUrl" class="w-full h-full object-cover">
                     <div class="absolute top-4 right-4 bg-yellow-400 border-4 border-white text-orange-950 px-4 py-2 rounded-2xl shadow-xl transform rotate-12">
-                        <p class="text-[10px] font-black uppercase text-center leading-none">Hasil Karya</p>
                         <p class="text-xl font-black text-center mt-1" x-text="predikat"></p>
                     </div>
                 </div>
